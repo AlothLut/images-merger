@@ -1,0 +1,90 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+        <h3>Add images and choose a merge method:</h3>
+        <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{url_for('index')}}">
+            {{form.csrf_token}}
+            <div class="form-group">
+                {{ form.pic_1.label }}
+                {{ form.pic_1(class="form-control") }}
+                {% if form.pic_1.errors %}
+                    <ul class="alert alert-danger errors">
+                    {% for error in form.pic_1.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.pic_2.label }}
+                {{ form.pic_2(class="form-control") }}
+                {% if form.pic_2.errors %}
+                    <ul class="alert alert-danger errors">
+                    {% for error in form.pic_2.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+             <div class="form-group">
+                {{ form.merge_type.label }}
+                {{ form.merge_type(class="form-control") }}
+                 {% if form.merge_type.errors %}
+                    <ul class="alert alert-danger errors">
+                    {% for error in form.merge_type.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+            {{ form.submit(class="btn btn-primary")}}
+           </div>
+
+            <div class="form-group">
+                {% for error in form.recaptcha.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                {{ form.recaptcha }}
+            </div>
+        </form>
+
+    {% if result_image_path %}
+        <div class="text-center">Result:</div>
+         <picture>
+             <img src={{result_image_path}} class="img-fluid" alt="My Image" width=500 height=500 />
+         </picture>
+    {% endif %}
+
+     <div class="row">
+    {% if graph_pic1 %}
+        <div class="col-lg-4 col-lg-offset-2">Colors in first image:
+         <picture>
+             <img src={{graph_pic1}} class="img-fluid" alt="My Image" width=500 height=500 />
+         </picture>
+         </div>
+    {% endif %}
+
+    {% if graph_pic2 %}
+        <div class="col-lg-4 col-lg-offset-2">Colors in second image:
+         <picture>
+             <img src={{graph_pic2}} class="img-fluid" alt="My Image" width=500 height=500 />
+         </picture>
+         </div>
+    {% endif %}
+
+    {% if graph_result %}
+        <div class="col-lg-4 col-lg-offset-2">Colors in merged images:
+         <picture>
+             <img src={{graph_result}} class="img-fluid" alt="My Image" width=500 height=500 />
+         </picture>
+         </div>
+    {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock content %}
